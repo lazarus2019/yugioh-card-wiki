@@ -1,0 +1,86 @@
+@use "scss/variables" as *;
+
+.footer {
+  background-color: #f5f5f5;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  &__logo {
+    width: 150px;
+    margin-bottom: 2rem;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__community {
+    &__heading {
+      font-size: 1.8rem;
+      color: #808284;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    &__link {
+      cursor: pointer;
+      > svg {
+        color: $main-color;
+      }
+
+      &:hover {
+        > svg {
+          color: #3596fe;
+        }
+      }
+    }
+
+    &__link + &__link {
+      margin-left: 3rem;
+    }
+  }
+
+  &__about {
+    display: flex;
+    align-items: flex-start;
+
+    &__content {
+      width: 375px;
+    }
+  }
+
+  &__shortcut-links {
+    flex-grow: 1;
+  }
+
+  &__link {
+    &__list {
+      margin-bottom: 2rem;
+    }
+
+    &__heading {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    &__item {
+      font-size: 1.4rem;
+      color: $main-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__item + &__item {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__credit {
+    padding-top: 2rem !important;
+    font-size: 1.2rem;
+    color: #808284;
+    line-height: 1.8rem;
+  }
+}

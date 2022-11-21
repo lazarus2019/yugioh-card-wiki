@@ -48,6 +48,7 @@ function DetailPage(props) {
       };
       fetchCard();
     }
+    window.scrollTo(0, 0);
     setLoading(false);
   }, [id, state]);
 
