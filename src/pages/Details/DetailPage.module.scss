@@ -1,0 +1,126 @@
+@use "../../scss/variables" as *;
+
+.card-modal {
+  display: flex;
+  padding: 2rem;
+  background: white;
+  color: white;
+  z-index: 10;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+
+  &__img {
+    width: 300px;
+
+     img {
+      max-width: 444px;
+      width: 100%;
+      border-radius: 1.5rem;
+
+      &.skeleton {
+        animation: skeleton-loading 1s linear infinite alternate;
+
+        @keyframes skeleton-loading {
+          0% {
+            background-color: hsl(200, 20%, 70%);
+          }
+          100% {
+            background-color: hsl(200, 20%, 95%);
+          }
+        }
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    margin-left: 2rem;
+    color: #000;
+
+    &__name {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    &__heading {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    &__info {
+      background-color: $main-color;
+      padding: 1rem 1rem;
+      font-size: 1.4rem;
+      color: #fff;
+      border-radius: 0.25rem;
+
+      > p {
+        margin-top: 0.5rem;
+
+        > svg {
+          vertical-align: top;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    .purchase-box {
+      &__list {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+
+        &__item {
+          font-size: 1.2rem;
+          padding: 0.5rem 0.75rem;
+          border-radius: 0.25rem;
+          background-color: $main-color;
+          color: #fff;
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    &__desc {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      max-height: max-content;
+      overflow-y: auto;
+    }
+  }
+}
+
+.breadcrumbs {
+  padding: 2rem;
+  color: #000;
+  font-size: 1.4rem;
+  > ol {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+
+    li {
+      a {
+        color: #b2591a;
+        text-decoration: none;
+        background-color: transparent;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      span {
+        margin: 0 0.5rem;
+      }
+    }
+  }
+}

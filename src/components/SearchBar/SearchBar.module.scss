@@ -1,0 +1,42 @@
+@use "../../scss/variables" as*;
+
+.search-bar {
+  margin-bottom: 4rem;
+
+  &__header {
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    outline: 0;
+    border: 1px solid #ddd;
+
+    &:focus {
+      border-color: $main-color;
+    }
+
+    &__wrapper {
+      position: relative;
+    }
+
+    &__clear-btn {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+      color: #ccc;
+      cursor: pointer;
+      display: none;
+    }
+
+    &:not(:placeholder-shown) ~ &__clear-btn {
+      display: block;
+    }
+  }
+}
