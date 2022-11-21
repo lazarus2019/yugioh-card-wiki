@@ -4,6 +4,13 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import yugiohAPI from "../../api/yugiohAPI";
 import { FaBook } from "react-icons/fa";
+import {
+  BsFillShieldFill,
+  BsFillTagFill,
+  BsFillStarFill,
+  BsBoxArrowUpRight,
+} from "react-icons/bs";
+import { RiSwordFill } from "react-icons/ri";
 import Grid from "../../components/Grid/Grid";
 import apiConfig from "../../api/apiConfig";
 import { useLocation, useParams } from "react-router";
@@ -12,6 +19,16 @@ import LoadingSkeleton from "components/LoadingSkeleton/LoadingSkeleton";
 import SimilarCardList from "components/SimilarCardList/SimilarCardList";
 const cx = classNames.bind(styles);
 
+const purchaseUrl = {
+  cardmarket: {
+    name: "cardmarket",
+    link: "https://www.cardmarket.com/en/YuGiOh/Cards/",
+  },
+  tcgplayer: {
+    name: "tcgplayer",
+    link: "https://shop.tcgplayer.com/yugioh/product/show?ProductName=",
+  },
+};
 function DetailPage(props) {
   const { id } = useParams();
   const { state } = useLocation();
@@ -40,11 +57,27 @@ function DetailPage(props) {
     for (let location in locations) {
       const locationName = location.split("_price")[0];
 
-      purchaseLocations.push(
-        <div className={cx("purchase-box__list__item")}>
-          {locationName} ${locations[location]}
-        </div>
-      );
+      let redirectLink = null;
+
+      if (purchaseUrl[locationName]) {
+        redirectLink = (
+          <a
+            href={`${purchaseUrl[locationName].link}${card.name}`}
+            target="_blank"
+            className={cx("purchase-box__list__item")}
+          >
+            {locationName} ${locations[location]}
+          </a>
+        );
+      } else {
+        redirectLink = (
+          <a href="#" className={cx("purchase-box__list__item")}>
+            {locationName} ${locations[location]}
+          </a>
+        );
+      }
+
+      purchaseLocations.push(redirectLink);
     }
 
     return purchaseLocations;
@@ -116,7 +149,7 @@ function DetailPage(props) {
                     <div className={cx("card-modal__content__info")}>
                       Attribute
                       <p>
-                        <FaBook size={15} />
+                        <BsFillTagFill size={15} />
                         <Link
                           className={cx("card-modal__content__info__link")}
                           to={`/?attribute=${card?.attribute}`}
@@ -130,7 +163,7 @@ function DetailPage(props) {
                     <div className={cx("card-modal__content__info")}>
                       Level
                       <p>
-                        <FaBook size={15} />
+                        <BsFillStarFill size={15} />
                         <Link
                           className={cx("card-modal__content__info__link")}
                           to={`/?level=${card?.level}`}
@@ -140,11 +173,11 @@ function DetailPage(props) {
                       </p>
                     </div>
                   ) : null}
-                  {card?.atk ? (
+                  {card?.atk >= 0 ? (
                     <div className={cx("card-modal__content__info")}>
                       ATK
                       <p>
-                        <FaBook size={15} />
+                        <RiSwordFill size={15} />
                         <Link
                           className={cx("card-modal__content__info__link")}
                           to={`/?atk=${card?.atk}`}
@@ -154,11 +187,11 @@ function DetailPage(props) {
                       </p>
                     </div>
                   ) : null}
-                  {card?.def ? (
+                  {card?.def >= 0 ? (
                     <div className={cx("card-modal__content__info")}>
                       DEF
                       <p>
-                        <FaBook size={15} />
+                        <BsFillShieldFill size={15} />
                         <Link
                           className={cx("card-modal__content__info__link")}
                           to={`/?def=${card?.def}`}
@@ -197,6 +230,14 @@ function DetailPage(props) {
                 </div>
                 <div className={cx("card-modal__content__heading")}>
                   Card Description
+                  <a
+                    href={`https://yugipedia.com/wiki/${card?.name}`}
+                    target="_blank"
+                    className={cx("card-modal__content__redirect-link")}
+                  >
+                    <BsBoxArrowUpRight size={13} />
+                    Yugipedia
+                  </a>
                 </div>
                 <div className={cx("card-modal__content__desc")}>
                   {card?.desc}
