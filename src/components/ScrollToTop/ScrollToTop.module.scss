@@ -1,0 +1,27 @@
+@use "scss/variables" as *;
+.goTop {
+  position: fixed;
+  right: -3rem;
+  bottom: 3rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background-color: #d9ac8d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: right 0.5s ease, background-color .5s ease;
+
+  > svg {
+    color: #fff;
+  }
+
+  &.shrink {
+    right: 1.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $main-color;
+  }
+}
