@@ -64,6 +64,13 @@
           vertical-align: top;
           margin-right: 0.5rem;
         }
+
+      }
+
+      &__link{
+        &:hover{
+          text-decoration: underline;
+        }
       }
     }
 
@@ -90,6 +97,7 @@
       line-height: 2.2rem;
       max-height: max-content;
       overflow-y: auto;
+      font-style: italic;
     }
   }
 }

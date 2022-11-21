@@ -6,7 +6,7 @@ import yugiohAPI from "../../api/yugiohAPI";
 import { FaBook } from "react-icons/fa";
 import Grid from "../../components/Grid/Grid";
 import apiConfig from "../../api/apiConfig";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import LoadingSkeleton from "components/LoadingSkeleton/LoadingSkeleton";
 import SimilarCardList from "components/SimilarCardList/SimilarCardList";
@@ -14,20 +14,25 @@ const cx = classNames.bind(styles);
 
 function DetailPage(props) {
   const { id } = useParams();
+  const { state } = useLocation();
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const params = {
-      id: id,
-    };
     setLoading(true);
-    const fetchCard = async () => {
-      const res = await yugiohAPI.test({ params: params });
-      setCard(res.data[0]);
-    };
-    fetchCard();
+    if (state) {
+      setCard(state?.card);
+    } else {
+      const params = {
+        id: id,
+      };
+      const fetchCard = async () => {
+        const res = await yugiohAPI.test({ params: params });
+        setCard(res.data[0]);
+      };
+      fetchCard();
+    }
     setLoading(false);
-  }, [id]);
+  }, [id, state]);
 
   const generatePurchaseLocation = (locations) => {
     const purchaseLocations = [];
@@ -64,7 +69,10 @@ function DetailPage(props) {
             <div className={cx("card-modal")}>
               <div className={cx("card-modal__img")}>
                 <img
-                  src={apiConfig.originalImage(card?.card_images[0].id)}
+                  src={
+                    card?.card_images[0].image_url ||
+                    apiConfig.originalImage(card?.card_images[0].id)
+                  }
                   className={cx("skeleton")}
                 />
               </div>
@@ -81,7 +89,12 @@ function DetailPage(props) {
                       Type
                       <p>
                         <FaBook size={15} />
-                        {card?.type}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?type=${card?.type}`}
+                        >
+                          {card?.type}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -90,7 +103,12 @@ function DetailPage(props) {
                       Typing
                       <p>
                         <FaBook size={15} />
-                        {card?.race}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?race=${card?.race}`}
+                        >
+                          {card?.race}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -99,7 +117,12 @@ function DetailPage(props) {
                       Attribute
                       <p>
                         <FaBook size={15} />
-                        {card?.attribute}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?attribute=${card?.attribute}`}
+                        >
+                          {card?.attribute}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -108,7 +131,12 @@ function DetailPage(props) {
                       Level
                       <p>
                         <FaBook size={15} />
-                        {card?.level}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?level=${card?.level}`}
+                        >
+                          {card?.level}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -117,7 +145,12 @@ function DetailPage(props) {
                       ATK
                       <p>
                         <FaBook size={15} />
-                        {card?.atk}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?atk=${card?.atk}`}
+                        >
+                          {card?.atk}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -126,7 +159,12 @@ function DetailPage(props) {
                       DEF
                       <p>
                         <FaBook size={15} />
-                        {card?.def}
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?def=${card?.def}`}
+                        >
+                          {card?.def}
+                        </Link>
                       </p>
                     </div>
                   ) : null}
@@ -134,7 +172,16 @@ function DetailPage(props) {
                     Archetype
                     <p>
                       <FaBook size={15} />
-                      {card?.archetype ? card?.archetype : "N/A"}
+                      {card?.archetype ? (
+                        <Link
+                          className={cx("card-modal__content__info__link")}
+                          to={`/?archetype=${card?.archetype}`}
+                        >
+                          {card?.archetype}
+                        </Link>
+                      ) : (
+                        "N/A"
+                      )}
                     </p>
                   </div>
                 </Grid>
